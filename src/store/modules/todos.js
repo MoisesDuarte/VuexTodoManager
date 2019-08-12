@@ -33,13 +33,26 @@ const actions = {
         const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`);
 
         commit('setTodos', response.data);
+    },
+    async updateTodo({ commit }, updTodo) {
+        const response = await axios.put(`https://jsonplaceholder.typicode.com/todos/${updTodo.id}`, updTodo);
+
+        console.log(response.data)
+
+        commit('updateTodo', response.data);
     }
 };
 
 const mutations = {
     setTodos: (state, todos) => (state.todos = todos), // Todos que são passados pela função são passados para o array todos em state
     newTodo: (state, todo) => state.todos.unshift(todo),
-    removeTodo: (state, id) => state.todos = state.todos.filter(todo => todo.id !== id) // Filtra ids que não são iguais ao id passado e então deleta o todo com id igual
+    removeTodo: (state, id) => state.todos = state.todos.filter(todo => todo.id !== id), // Filtra ids que não são iguais ao id passado e então deleta o todo com id igual
+    updateTodo: (state, updTodo) => {
+        const index = state.todos.findIndex(todo => todo.id === updTodo.id); // retorna id do todo atualizado para manter posição
+        if(index !== -1) {
+            state.todos.splice(index, 1, updTodo);
+        }
+    }
 };
 
 export default {
