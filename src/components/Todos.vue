@@ -16,7 +16,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     name: "Todos",
     methods: {
-      ...mapActions(['fetchTodos', 'deleteTodo']) // Mapeando action para o componente
+      ...mapActions(['fetchTodos', 'deleteTodo']) // Mapeando actions de todo.js para o componente
     },
     computed: mapGetters(['allTodos']), // Getters que seram usados no componente
     created() { // Estágio inicial da criação em lifecycle do vue
